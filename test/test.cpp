@@ -33,7 +33,7 @@ TEST(TestcreateOneFr52Deck, TestMatchFr52Deck) {
 }
 
 
-TEST(TestshuffleOneFr52Deck, TestShuffleFr52Deck) {
+TEST(TestshuffleOneFr52Deck, TestShuffleFr52DeckListMatch) {
     ListCardNodePtr expectedDeck = NULL;
     ListCardNodePtr actualDeck = NULL;
 
@@ -42,10 +42,51 @@ TEST(TestshuffleOneFr52Deck, TestShuffleFr52Deck) {
     
     readFileOfShuffledFr52Deck(&expectedDeck);
     ASSERT_TRUE(ListMatch(actualDeck, expectedDeck));
-    // Verifica se os nós foram trocados
-    ASSERT_TRUE(ListNodeAddressesMismatch(actualDeck, expectedDeck));
-    // Verifica se algum dos ponteiros é nulo
-    ASSERT_TRUE(NullPointerTest(actualDeck, expectedDeck));
-    
 }
 
+TEST(TestshuffleOneFr52Deck, TestShuffleFr52DeckNodeAddressMismatch) {
+    ListCardNodePtr expectedDeck = NULL;
+    ListCardNodePtr actualDeck = NULL;
+
+    int i;
+    int actualAddressSeq[53] = { 0 };
+    int expectedAddressSeq[53] = { 0 };
+
+    for (i = 0; i < 53; i++) {
+        expectedAddressSeq[i] = rand() + 1;
+    }
+
+    ListCardNodePtr actualAddressSeqPtr;
+    ListCardNodePtr expectedAddressSeqPtr;
+
+    ReadFileOfOneFr52Deck(&actualDeck);
+    actualAddressSeqPtr = actualDeck;
+    for (i = 0; actualAddressSeqPtr != NULL && i < 52; i++) {
+        actualAddressSeq[i] = (int)actualAddressSeqPtr;
+        actualAddressSeqPtr = actualAddressSeqPtr->nextPtr;
+    }
+    actualAddressSeq[i] = (int)actualAddressSeqPtr;
+
+    shuffle(&actualDeck);
+    expectedAddressSeqPtr = actualDeck;
+    for (i = 0; expectedAddressSeqPtr != NULL && i < 52; i++) {
+        expectedAddressSeq[i] = (int)expectedAddressSeqPtr;
+        expectedAddressSeqPtr = expectedAddressSeqPtr->nextPtr;
+    }
+    expectedAddressSeq[i] = (int)expectedAddressSeqPtr;
+
+    // Verifica se os nós foram trocados
+    ASSERT_TRUE(ListNodeAddressesArrayMismatch(actualAddressSeq, expectedAddressSeq));
+}
+
+TEST(TestshuffleOneFr52Deck, TestShuffleFr52DeckEmptyDeck) {
+    ListCardNodePtr expectedDeck = NULL;
+    ListCardNodePtr actualDeck = NULL;
+
+    ReadFileOfOneFr52Deck(&actualDeck);
+    shuffle(&actualDeck);
+
+    readFileOfShuffledFr52Deck(&expectedDeck);
+    // Verifica se algum dos ponteiros é nulo
+    ASSERT_TRUE(NullPointerTest(actualDeck, expectedDeck));
+}

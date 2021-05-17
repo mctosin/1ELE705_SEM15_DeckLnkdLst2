@@ -204,7 +204,7 @@ template<size_t size>
     ListCardNodePtr actualPtr = actualListPtr;
     ListCardNodePtr expectedPtr = expectedListPtr;
 
-    while (actualPtr != NULL) {
+    while (actualPtr != NULL) {   
         if (actualPtr == expectedPtr) {
             return ::testing::AssertionFailure() << "List Node Address Mismatch Fail";
         }
@@ -223,6 +223,27 @@ template<size_t size>
     if (expectedListPtr == NULL || actualListPtr == NULL) {
         // Some pointer is NULL
         return ::testing::AssertionFailure() << "FAIL, Some pointer is NULL";
+    }
+    return ::testing::AssertionSuccess();
+}
+
+::testing::AssertionResult ListNodeAddressesArrayMismatch(int* actualAddrSeq, int* expectedAddrSeq)
+{
+    int i;
+    int igual = 0;
+    for (i = 0; i < 52 && actualAddrSeq[i] != NULL; i++) {
+        if (actualAddrSeq[i] == expectedAddrSeq[i]) {
+            igual++;
+        }
+    }
+    if (igual > 4) {
+        return ::testing::AssertionFailure() << "List Node Address Mismatch Fail";
+    }
+    if (actualAddrSeq[i] != NULL || expectedAddrSeq[i] != NULL) {
+        return ::testing::AssertionFailure() << "Last Link NULL Match Fail";
+    }
+    if (i != 52) {
+        return ::testing::AssertionFailure() << "Deck has not 52 cards";
     }
     return ::testing::AssertionSuccess();
 }

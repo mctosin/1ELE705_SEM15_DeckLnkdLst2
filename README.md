@@ -1,5 +1,2 @@
-# 1ELE705_SEM13_DeckLinkedList
-
-Neste projeto serão desenvolvidas funções básicas de um jogo de cartas, baseado em listas ligadas com elementos alocados dinamicamente.
-
-As Instruções deste Assignment estão em main.c.
+# 1ELE705_SEM15_DeckLinkedList_Solution2_MoreTests
+Biblioteca do jogo de cartas com funções gtests melhorados

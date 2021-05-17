@@ -24,40 +24,17 @@ const char* suit[] = { "Hearts", "Diamonds", "Clubs", "Spades" };
 
 // Mude a string com o caminho (PATH) do diretório do seu projeto.
 // Use duas contrabarras para separar os diretórios.
-const char Path[] = { "C:\\Repos\\1ELE705_SEM13_DeckLinkedList\\" };
+const char Path[] = { "C:\\Repos\\1ELE705_SEM15_DeckLnkdLst2\\" };
 
 //void view(ListCardNodePtr lPtr, FILE* cfPtr) {
 //
 //}
 
-void createOneFr52Deck(ListCardNodePtr* sPtr) {
-	// Proibido alterar o código acima
-
-
-	// Crie seu código aqui
-
-
-	// Proibido alterar o código abaixo
-}
-
-
-void shuffle(ListCardNodePtr* sPtr) {
-	// Proibido alterar o código acima
-
-
-	// Crie seu código aqui
-
-
-	// Proibido alterar o código abaixo
-}
-
-#if 0
-// Código inicial para a função shuffle
 void shuffle(ListCardNodePtr* sPtr) {
 	ListCardNodePtr trocaPtr, jumpPtr, trocaAnteriorPtr, jumpAnteriorPtr, trocaProxPtr;
 	int N;
 
-	// trocaPtr e jumpPtr recebem o primeiro nó, se existir.
+	// trocaPtr e jumpPtr apontam para o primeiro nó, se este existir.
 	if (*sPtr == NULL) return;
 	trocaAnteriorPtr = NULL;
 	trocaPtr = *sPtr;
@@ -65,10 +42,12 @@ void shuffle(ListCardNodePtr* sPtr) {
 	jumpPtr = *sPtr;
 
 	while (trocaPtr != NULL) {
+		// Sorteia o nó para o qual jumPtr irá apontar
 		do {
 			// Sorteia N entre 1 e 100
 			N = randomico(); //rand() % 100 + 1; // Descomente e veja que nunca vai funcionar.
 			// jumpPtr percorre N nós-carta na lista de forma circular
+			// note que jumpPtr será deslocado N posições à partir da última posição em que parou no ciclo anteiror.
 			for (; N > 0; N--) {
 				jumpAnteriorPtr = jumpPtr;
 				jumpPtr = jumpPtr->nextPtr;
@@ -76,25 +55,80 @@ void shuffle(ListCardNodePtr* sPtr) {
 					jumpPtr = *sPtr;
 				}
 			}
-		} while (jumpPtr->nextPtr == trocaPtr || trocaPtr->nextPtr == jumpPtr);
-		// Proibido alterar o código acima
+			// Se jumpPtr e trocaPtr apontarem para o mesmo nó ou se apontarem para nós vizinhos, sorteia novo nó para jumPtr
+		} while (jumpPtr == trocaPtr || jumpPtr->nextPtr == trocaPtr || trocaPtr->nextPtr == jumpPtr);
 
-		// Continue o código
+		// NÃO MODIFIQUE O CÓDIGO ACIMA
+
+		// INSIRA SEU CÓDIGO A PARTIR DESTE PONTO
 
 
 
-		// Proibido alterar o código abaixo
+
+
+		/* RETIRE ESTA LINHA E ESTE COMANDO ANTES DE COMEÇAR A CODIFICAR SEU PROGRAMA --> */ return;
+
+
+		// Algoritmo para a troca dos nós-carta
+			// O mecanismo de troca é diferente sempre que um nó carta a ser trocado está na primeira posição da lista.
+			// Note que há três tipos de trocas distintas dentro da estrutura Se-Senão abaixo.
+			// Assim:
+
+		// Se trocaPtr aponta para o primeiro nó
+
+			// Troca o nó apontado por trocaPtr pelo nó apontado por jumpPtr, refazendo as ligações destes.
+
+			// Obs: jumpPtr nunca irá apontar para o primeiro elemento nesse instante, pois jumpPtr nunca 
+			//		será igual a trocaPtr, dada as condiões do sorteio
+
+		// Senão
+
+			// Se jumpPtr aponta para o primeiro nó
+
+				// Troca o nó apontado por trocaPtr pelo nó apontado por jumpPtr, refazendo as ligações destes.
+
+			// Senão
+
+				// Troca o nó apontado por trocaPtr pelo nó apontado por jumpPtr, refazendo as ligações destes.
+
+			// Fim Se-Senão
+
+		// Fim Se-Senão
+
+
+
+
+
+		// SEU CÓDIGO TERMINA ACIMA.
+
+		// NÃO MODIFIQUE O CÓDIGO ABAIXO
+
+		// Com as trocas dos nós, jumpPtr e trocaPtr continuam apontando para os nós agora trocados. Assim, 
+		// é necessário trocar as posições apontadas, de forma que seja preservada a posição atual de 
+		// jumpPtr e de trocaPtr na lista.
+		// Usa trocaProxPtr como buffer
+		trocaProxPtr = trocaPtr;
+		trocaPtr = jumpPtr;
+		jumpPtr = trocaProxPtr;
+
+		// Agora trocaAnteriorPtr e trocaPtr podem avançar para o próximo nó a ser trocado
+		trocaAnteriorPtr = trocaPtr;
+		trocaPtr = trocaPtr->nextPtr;
 	}
 }
-// Fim do código inicial para a função shuffle
-#endif
 
+void createOneFr52Deck(ListCardNodePtr* sPtr) {
+	// NÃO MODIFIQUE O CÓDIGO ACIMA
 
+	// INSIRA SEU CÓDIGO A PARTIR DESTE PONTO
+
+	// NÃO MODIFIQUE O CÓDIGO ABAIXO
+}
 
 // Este projeto implementa funções para o gerenciamento de cartas de.
 // baralho, que podem ser utilizadas para a construção de um jogo.
 // 
-// As funções a serem construídas são: createOneFr52Deck e shuffle.
+// As funções a serem construídas são: createOneFr52Deck, shuffle e view.
 //
 // A função createOneFr52Deck cria um monte contendo as cartas de um baralho
 // padrão francês com 52 cartas. O monte de cartas é uma lista dinâmica cujos
@@ -139,6 +173,21 @@ void shuffle(ListCardNodePtr* sPtr) {
 // sorteio de N.
 // O elemento apontado por jumpPtr é trocado com o elemento apontado por 
 // trocaPtr e trocaPtr é apontado para o próximo nó da lista.
-// O processo termina quando trocaPtr chegar ao fim da lista, apontando 
-// para NULL.
+// O processo termina quando trocaPtr chegar ao fim da lista.
+//
+// A função view deve imprimir em um arquivo sequencial de texto o conteúdo 
+// impresso de uma lista de cartas.
+// A impressão no arquivo deve ser feita em duas colunas obedecendo o
+// seguinte formato:
+//    seven of diamonds   deuce of spades
+// onde:
+// - A palavra of deve iniciar na coluna 10 e na coluna 30, exatamente.
+// - A face da carta deve terminar 1 espaço antes da palavra of.
+// - O naipe deve inicial 1 espaço após a palavra of.
+// - Um enter deve ser colocado sempre ao final no nipe da segunda coluna.
+// - Ao final da impressão, um enter deve ser colocado ao final do
+//   nipe da carta impressa.
+// São parâmetros passados para a função, o endereço do início do da lista
+// (do tipo ListCardNodePtr) e o endereço do arquivo de texto (FILE *) no
+// qual será impressa a lista de cartas.
 //

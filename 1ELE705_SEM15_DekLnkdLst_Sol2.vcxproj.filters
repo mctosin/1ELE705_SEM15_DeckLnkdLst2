@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="test">
-      <UniqueIdentifier>{c3ce3c73-23a0-479e-94ff-0f4490208172}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{9a3659ad-e6d8-40e7-b948-d575e95cacc3}</UniqueIdentifier>
-    </Filter>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <Filter Include="test">
+      <UniqueIdentifier>{86a26926-d15a-425e-9650-1153f28efc62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{308b6246-2c1d-4a62-929c-6d0497ba8658}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Aux_Func.c">
